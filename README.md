@@ -44,12 +44,3 @@ app/Services/Tracy/
 Configuration
 -------------
 This is it! No configuration needed.
-
--------------
-
-License
-=======
-
-This bundle license: https://github.com/kutny/tracy-bundle/blob/master/LICENSE
-
-Tracy debugger license: https://github.com/nette/tracy/blob/master/license.md
