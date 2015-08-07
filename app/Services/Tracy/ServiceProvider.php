@@ -9,37 +9,37 @@ use Tracy\Debugger;
 
 class ServiceProvider extends \Illuminate\Support\ServiceProvider
 {
-    /**
-     * Bootstrap the application services.
-     *
-     * @return void
-     */
-    public function boot()
-    {
+	/**
+	 * Bootstrap the application services.
+	 *
+	 * @return void
+	 */
+	public function boot()
+	{
 
-	    if (!$this->app->runningInConsole()) {
+		if (!$this->app->runningInConsole()) {
 
 //		    Config::set('app.debug', false);
-	        Debugger::$logDirectory = realpath(__DIR__.'/logs');
-		    Debugger::$showLocation = true;
+			Debugger::$logDirectory = realpath(__DIR__.'/logs');
+			Debugger::$showLocation = true;
 
-		    //enable only in case pf development - true == production
-		    $isProduction =  !env('APP_DEBUG',false);
+			//enable only in case pf development - true == production
+			$isProduction =  !env('APP_DEBUG',false);
 
-		    Debugger::enable( $isProduction );
-	    }
+			Debugger::enable( $isProduction );
+		}
 
-    }
+	}
 
-    /**
-     * Register the application services.
-     *
-     * @return void
-     */
-    public function register()
-    {
+	/**
+	 * Register the application services.
+	 *
+	 * @return void
+	 */
+	public function register()
+	{
 		$this->registerMiddleware('App\Services\Tracy\Middleware');
-    }
+	}
 
 	/**
 	 * Register the Debugbar Middleware
