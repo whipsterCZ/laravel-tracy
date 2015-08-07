@@ -21,14 +21,16 @@ class Middleware
 		    return $next($request);
 	    } catch (\Exception $e) {
 
-		    //pokusím vypsat výjimku
+
 		    if ( Debugger::$productionMode )  {
+			    //Loging exception
 			    Debugger::log($e);
 		    } else {
+			    //Rendering error page for exception
 			    Debugger::exceptionHandler($e);
 		    }
 
-		    //pokud je debugger vypnutý let it bubble
+		    //let it bubble
 		    throw $e;
 	    }
 
