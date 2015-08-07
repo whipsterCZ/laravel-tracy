@@ -20,9 +20,11 @@ Installation
 ------------
 
 1) Add **Tracy** to your **composer.json**
+~~~~~ json
 "require": {
     "tracy/tracy": "^2.3"
 }
+~~~~~
 
 2) Add source code to your existing App - directories should **match service Namespace**
 ~~~~~ php
