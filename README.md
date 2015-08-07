@@ -1,5 +1,4 @@
-# LaravelWithTracy
-Tracy Debugger support for Laravel
+Tracy Debugger Service provider for Laravel
 =====================================
 
 This bundle adds the powerful [Tracy debug tool](https://github.com/nette/tracy) to the Laravel 5 framework.
