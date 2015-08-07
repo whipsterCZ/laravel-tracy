@@ -1,7 +1,7 @@
-Tracy Debugger Service provider for Laravel
+Tracy Debugger support for Laravel
 =====================================
 
-This bundle adds the powerful [Tracy debug tool](https://github.com/nette/tracy) to the Laravel 5 framework.
+This service provider adds the powerful [Tracy debug tool](https://github.com/nette/tracy) to the Laravel 5 framework.
 
 [![Nette Tracy screenshot](http://nette.github.io/tracy/images/tracy-exception.png)](http://nette.github.io/tracy/tracy-exception.html)
 
