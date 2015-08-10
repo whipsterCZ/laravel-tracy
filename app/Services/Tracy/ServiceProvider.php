@@ -22,6 +22,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
 
 			Debugger::$logDirectory = storage_path('logs');
 			Debugger::$showLocation = true;
+			Debugger::$strictMode = true;
 //			Debugger::$email = 'admin@example.com';
 
 			//Enable only in case pf development - true == production
