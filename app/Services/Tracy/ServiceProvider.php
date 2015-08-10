@@ -20,11 +20,13 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
 
 		if (!$this->app->runningInConsole() && !Request::ajax() ) {
 
-			Debugger::$logDirectory = realpath(__DIR__.'/logs');
+			Debugger::$logDirectory = storage_path('logs');
 			Debugger::$showLocation = true;
+//			Debugger::$email = 'admin@example.com';
 
 			//Enable only in case pf development - true == production
 			$isProduction =  !env('APP_DEBUG',false);
+
 			Debugger::enable( $isProduction );
 		}
 
@@ -41,7 +43,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
 	}
 
 	/**
-	 * Register the Debugbar Middleware
+	 * Register the Tracy Middleware
 	 *
 	 * @param  string $middleware
 	 */
