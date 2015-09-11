@@ -4,12 +4,40 @@ namespace App\Services\Tracy;
 
 require_once('shortcuts.php');
 
+use App\Services\Tracy\Panels\ConnectionPanel;
+use App\Services\Tracy\Panels\RequestPanel;
+use App\Services\Tracy\Panels\RoutingPanel;
+use App\Services\Tracy\Panels\SessionPanel;
+use App\Services\Tracy\Panels\UserPanel;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Request;
+use Illuminate\Contracts\Debug\ExceptionHandler as ExceptionHandlerContract;
 use Tracy\Debugger;
 
 class ServiceProvider extends \Illuminate\Support\ServiceProvider
 {
+
+	/**
+	 * Register the service provider.
+	 *
+	 * @return void
+	 */
+	public function register()
+	{
+		Debugger::$logDirectory = storage_path('logs');
+		//Debugger::$email = 'admin@example.com';
+		Debugger::$showLocation = true;
+		Debugger::$strictMode = true;
+
+		//Enable only in debug mode - (DEV)
+		$debugMode = env('APP_DEBUG',false);
+		$productionMode = !$debugMode;
+		Debugger::enable( $productionMode );
+
+		//register own ExceptionHandler
+		$this->app->bind(ExceptionHandlerContract::class, Handler::class);
+	}
+
 	/**
 	 * Bootstrap the application services.
 	 *
@@ -18,39 +46,6 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
 	public function boot()
 	{
 
-		if (!$this->app->runningInConsole() && !Request::ajax() ) {
-
-			Debugger::$logDirectory = storage_path('logs');
-			Debugger::$showLocation = true;
-			Debugger::$strictMode = true;
-//			Debugger::$email = 'admin@example.com';
-
-			//Enable only in case pf development - true == production
-			$isProduction =  !env('APP_DEBUG',false);
-
-			Debugger::enable( $isProduction );
-		}
-
 	}
 
-	/**
-	 * Register the application services.
-	 *
-	 * @return void
-	 */
-	public function register()
-	{
-		$this->registerMiddleware('App\Services\Tracy\Middleware');
-	}
-
-	/**
-	 * Register the Tracy Middleware
-	 *
-	 * @param  string $middleware
-	 */
-	protected function registerMiddleware($middleware)
-	{
-		$kernel = $this->app['Illuminate\Contracts\Http\Kernel'];
-		$kernel->pushMiddleware($middleware);
-	}
 }
