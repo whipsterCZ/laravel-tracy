@@ -4,11 +4,6 @@ namespace App\Services\Tracy;
 
 require_once('shortcuts.php');
 
-use App\Services\Tracy\Panels\ConnectionPanel;
-use App\Services\Tracy\Panels\RequestPanel;
-use App\Services\Tracy\Panels\RoutingPanel;
-use App\Services\Tracy\Panels\SessionPanel;
-use App\Services\Tracy\Panels\UserPanel;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Contracts\Debug\ExceptionHandler as ExceptionHandlerContract;
