@@ -44,3 +44,12 @@ app/Services/Tracy/
 Configuration
 -------------
 This is it! No configuration needed.
+
+Logging
+-------------
+Service recognize application environment using `env('APP_DEBUG')` 
+
+If `APP_DEBUG is false` or `Request()->ajax() is true` service log your Exceptions to directory
+~~~~~ php
+/storage/logs/
+~~~~~
