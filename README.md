@@ -53,3 +53,21 @@ If `APP_DEBUG is false` or `Request()->ajax() is true` service log your Exceptio
 ~~~~~ php
 /storage/logs/
 ~~~~~
+
+TroubleShooting
+------------
+If TracyDebug bar is shown with JSON, you have probably created JSON Response wrong way.
+
+~~~~~ php
+Route::get('json',function(){
+	$user = \App\Models\User::first();
+	return $user; //Correct ->toJson() will be invoked and JSON Response will be created
+	
+	$json = $user->toJson();
+	return $json; //Wrong - it creates Text/Plain Response
+	
+	return \Response::json($json); //This is OK, but note that your JSON will be ESCAPED
+});
+~~~~~
+
+
