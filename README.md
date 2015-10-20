@@ -56,7 +56,7 @@ If `APP_DEBUG is false` or `Request()->ajax() is true` service log your Exceptio
 
 TroubleShooting
 ------------
-If TracyDebug bar is shown with JSON, you have probably created JSON Response wrong way.
+If you are sending JSON with TracyDebugBar rendered, you have probably created JSON Response wrong way.
 
 ~~~~~ php
 Route::get('json',function(){
