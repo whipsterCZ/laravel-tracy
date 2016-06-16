@@ -2,6 +2,7 @@
 
 namespace App\Services\Tracy;
 
+use Auth;
 use Exception;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -46,7 +47,23 @@ class Handler extends ExceptionHandler
 	{
 		//If larevel-bugsnag is present
 		if (app()->bound('bugsnag')) {
-			app('bugsnag')->notifyException($e, null, "error");
+
+			$meta = null;
+			if(Auth::check() && ($user = Auth::user())) {
+				$meta = [];
+				if( $user->name ) {
+					$meta['user']['name'] = $user->name;
+				}
+				if( $user->full_name ) {
+					$meta['user']['name'] = $user->full_name;
+				}
+				if( $user->role ) {
+					$meta['user']['role'] = $user->role;
+				}
+				$meta['user']['email'] = $user->email;
+			}
+
+			app('bugsnag')->notifyException($e, $meta, "error");
 		}
 
 		if (Debugger::$productionMode ) {
