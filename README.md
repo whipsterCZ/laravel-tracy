@@ -44,6 +44,13 @@ app/Services/Tracy/
 Configuration
 -------------
 This is it! No configuration needed.
+If you need configure Tracy or Laravel Exception handler @see `Tracy/ServiceProvider.php` 
+
+
+Bugsnag integration
+-------------------
+Tracy service automatically utilize **Bugsnag error handling** if `bugsnag-laravel` package is present
+
 
 Logging
 -------------

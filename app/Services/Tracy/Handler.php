@@ -4,6 +4,7 @@ namespace App\Services\Tracy;
 
 use Exception;
 use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
@@ -12,14 +13,15 @@ use Tracy\Debugger;
 class Handler extends ExceptionHandler
 {
 
-    /**
-     * A list of the exception types that should not be reported.
-     *
-     * @var array
-     */
-    protected $dontReport = [
-        HttpException::class,
-    ];
+	/**
+	 * A list of the exception types that should not be reported.
+	 *
+	 * @var array
+	 */
+	protected $dontReport = [
+		HttpException::class,
+		ModelNotFoundException::class
+	];
 
 	/**
 	 * @var Application
@@ -42,6 +44,11 @@ class Handler extends ExceptionHandler
 	 */
 	public function report(Exception $e)
 	{
+		//If larevel-bugsnag is present
+		if (app()->bound('bugsnag')) {
+			app('bugsnag')->notifyException($e, null, "error");
+		}
+
 		if (Debugger::$productionMode ) {
 			Debugger::log($e);
 		}
