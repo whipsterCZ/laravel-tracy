@@ -46,8 +46,7 @@ class Handler extends ExceptionHandler
 	public function report(Exception $e)
 	{
 		//If larevel-bugsnag is present
-		if (app()->bound('bugsnag')) {
-
+        if (app()->bound('bugsnag') && app()->environment(config('bugsnag.notify_release_stages')) ) {
 			$meta = null;
 			if(Auth::check() && ($user = Auth::user())) {
 				$meta = [];
@@ -62,7 +61,6 @@ class Handler extends ExceptionHandler
 				}
 				$meta['user']['email'] = $user->email;
 			}
-
 			app('bugsnag')->notifyException($e, $meta, "error");
 		}
 
