@@ -24,10 +24,10 @@ class Handler extends ExceptionHandler
      * @var array
      */
     protected $dontReport = [
-        AuthorizationException::class,
+        AuthorizationException::class,//for laravel <5.2 remove this
         HttpException::class,
         ModelNotFoundException::class,
-        ValidationException::class,
+        ValidationException::class,//for laravel <5.2 remove this
     ];
 
 	/**
