@@ -30,7 +30,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
 		Debugger::enable( $productionMode );
 
 		//register own ExceptionHandler
-		$this->app->bind(ExceptionHandlerContract::class, Handler::class);
+		$this->app->bind(ExceptionHandlerContract::class, ExceptionHandler::class);
 	}
 
 	/**
