@@ -1,8 +1,7 @@
 <?php
 
 /**
- *
- * Larevel version 5.2
+ * Larevel version 5.1
  * @author Daniel Kouba <whipstercz@gmail.com>
  */
 
@@ -33,10 +32,8 @@ class ExceptionHandler extends IlluminateExceptionHandler
      * @var array
      */
     protected $dontReport = [
-        AuthorizationException::class,
         HttpException::class,
         ModelNotFoundException::class,
-        ValidationException::class,
     ];
 
     /**

@@ -1,30 +1,21 @@
 <?php
 
 /**
- *
- * Larevel version 5.2
+ * Larevel version 5.1
  * @author Daniel Kouba <whipstercz@gmail.com>
  */
 
 namespace App\Services\Tracy;
 
-use Auth;
+
 use Exception;
-
-use Illuminate\Auth\Access\AuthorizationException;
-use Illuminate\Auth\AuthenticationException;
-use Illuminate\Contracts\Foundation\Application;
-use Illuminate\Contracts\Validation\ValidationException;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Illuminate\Http\Exception\HttpResponseException;
-
-use Psr\Log\LoggerInterface;
-use Symfony\Component\HttpKernel\Exception\HttpException;
-use Illuminate\Foundation\Exceptions\Handler as IlluminateExceptionHandler;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Illuminate\Foundation\Exceptions\Handler as BaseExceptionHandler;
+use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\ValidationException;
 use Tracy\Debugger;
 
-class ExceptionHandler extends IlluminateExceptionHandler
+class ExceptionHandler extends BaseExceptionHandler
 {
 
     /**
@@ -33,22 +24,13 @@ class ExceptionHandler extends IlluminateExceptionHandler
      * @var array
      */
     protected $dontReport = [
-        AuthorizationException::class,
-        HttpException::class,
-        ModelNotFoundException::class,
-        ValidationException::class,
+        \Illuminate\Auth\AuthenticationException::class,
+        \Illuminate\Auth\Access\AuthorizationException::class,
+        \Symfony\Component\HttpKernel\Exception\HttpException::class,
+        \Illuminate\Database\Eloquent\ModelNotFoundException::class,
+        \Illuminate\Session\TokenMismatchException::class,
+        \Illuminate\Validation\ValidationException::class,
     ];
-
-    /**
-     * @var Application
-     */
-    protected $app;
-
-    function __construct(Application $app, LoggerInterface $log)
-    {
-        parent::__construct($log);
-        $this->app = $app;
-    }
 
     /**
      * Report or log an exception.
@@ -97,23 +79,21 @@ class ExceptionHandler extends IlluminateExceptionHandler
      */
     public function render($request, Exception $e) {
 
+        $e = $this->prepareException($e);
+
         if ($e instanceof HttpResponseException) {
             return $e->getResponse();
-        } elseif ($e instanceof ModelNotFoundException) {
-            $e = new NotFoundHttpException($e->getMessage(), $e);
-        } elseif ($e instanceof AuthenticationException) {
+        } elseif ($e instanceof \Illuminate\Auth\AuthenticationException) {
             return $this->unauthenticated($request, $e);
-        } elseif ($e instanceof AuthorizationException) {
-            $e = new HttpException(403, $e->getMessage());
-        } elseif ($e instanceof ValidationException && $e->getResponse()) {
-            return $e->getResponse();
+        } elseif ($e instanceof ValidationException) {
+            return $this->convertValidationExceptionToResponse($e, $request);
         } elseif ( !Debugger::$productionMode ) {
-            if ( !$this->app->runningInConsole()) {
+            if ( !app()->runningInConsole()) {
                 return Debugger::exceptionHandler($e, true);
             }
         }
-        return parent::render($request,$e);
 
+        return $this->prepareResponse($request, $e);
     }
 
 }

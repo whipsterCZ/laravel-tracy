@@ -45,6 +45,7 @@ Configuration
 -------------
 This is it! No configuration needed.
 If you need configure Tracy or Laravel Exception handler @see `Tracy/ServiceProvider.php` 
+There are several versions of ExceptionHandlers for different Laravel Version - default is 5.2
 
 
 Bugsnag integration
