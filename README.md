@@ -16,13 +16,18 @@ See [full Tracy docs](https://github.com/nette/tracy) and [sample error page](ht
 
 Tracy is a part of the [Nette Framework](http://nette.org/).
 
+Requirements
+-------------
+Tracy =2.3.7
+Laravel >5.1 = check repo tags matching your laravel version 
+
 Installation
 ------------
 
 1) Add **Tracy** to your **composer.json**
 ~~~~~ json
 "require": {
-    "tracy/tracy": "^2.3"
+    "tracy/tracy": "2.3.7"
 }
 ~~~~~
 
@@ -45,7 +50,6 @@ Configuration
 -------------
 This is it! No configuration needed.
 If you need configure Tracy or Laravel Exception handler @see `Tracy/ServiceProvider.php` 
-There are several versions of ExceptionHandlers for different Laravel Version - default is 5.2
 
 
 Bugsnag integration
@@ -77,5 +81,7 @@ Route::get('json',function(){
 	return \Response::json($json); //This is OK, but note that your JSON will be ESCAPED
 });
 ~~~~~
+
+Use Tracy version 2.3.7  some newer versions are incompatible..
 
 

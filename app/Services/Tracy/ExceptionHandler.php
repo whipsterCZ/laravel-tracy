@@ -56,7 +56,8 @@ class ExceptionHandler extends BaseExceptionHandler
             }
 
         }
-        parent::report($e);
+        //Uncomment if you wanna laravel logs as well
+        //parent::report($e);
     }
 
     /**
