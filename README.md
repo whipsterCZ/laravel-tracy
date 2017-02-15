@@ -18,8 +18,8 @@ Tracy is a part of the [Nette Framework](http://nette.org/).
 
 Requirements
 -------------
-Tracy =2.3.7
-Laravel >5.1 = check repo tags matching your laravel version 
+* Tracy =2.3.7
+* Laravel >5.1 = check repo tags matching your laravel version 
 
 Installation
 ------------
