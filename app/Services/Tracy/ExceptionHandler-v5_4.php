@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Larevel version 5.1
+ * Laravel version 5.4
  * @author Daniel Kouba <whipstercz@gmail.com>
  */
 
@@ -9,7 +9,7 @@ namespace App\Services\Tracy;
 
 
 use Exception;
-use Illuminate\Foundation\Exceptions\Handler as BaseExceptionHandler;
+use App\Exceptions\Handler as BaseExceptionHandler;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
@@ -18,19 +18,6 @@ use Tracy\Debugger;
 class ExceptionHandler extends BaseExceptionHandler
 {
 
-    /**
-     * A list of the exception types that should not be reported.
-     *
-     * @var array
-     */
-    protected $dontReport = [
-        \Illuminate\Auth\AuthenticationException::class,
-        \Illuminate\Auth\Access\AuthorizationException::class,
-        \Symfony\Component\HttpKernel\Exception\HttpException::class,
-        \Illuminate\Database\Eloquent\ModelNotFoundException::class,
-        \Illuminate\Session\TokenMismatchException::class,
-        \Illuminate\Validation\ValidationException::class,
-    ];
 
     /**
      * Report or log an exception.
@@ -67,7 +54,9 @@ class ExceptionHandler extends BaseExceptionHandler
             if (Debugger::$productionMode) {
                 Debugger::log($e);
             }
+
         }
+        parent::report($e);
     }
 
     /**
@@ -95,5 +84,6 @@ class ExceptionHandler extends BaseExceptionHandler
 
         return $this->prepareResponse($request, $e);
     }
+
 
 }
